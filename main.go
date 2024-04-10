@@ -19,10 +19,10 @@ func main() {
 	server := http.Server{}
 
 	livez := func(w net_http.ResponseWriter, r *net_http.Request) { w.WriteHeader(net_http.StatusOK) }
-	server.AddHandler("/livez", net_http.MethodGet, livez)
+	server.RegisterHandlerFunc("/livez", net_http.MethodGet, livez)
 
 	readyz := func(w net_http.ResponseWriter, r *net_http.Request) { w.WriteHeader(net_http.StatusOK) }
-	server.AddHandler("/readyz", net_http.MethodGet, readyz)
+	server.RegisterHandlerFunc("/readyz", net_http.MethodGet, readyz)
 
 	listenAndServeFailureFunc := func(err error) { klog.ErrorS(err, "") }
 	if err := server.Start(":10000", listenAndServeFailureFunc); err != nil {
